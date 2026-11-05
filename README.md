@@ -2,11 +2,11 @@
 
 **Topic:** Car rental website (continuation of the midterm project, same topic and layout).
 
-**Live site:** _add the GitHub Pages / Netlify link here_
 
 **Group members:**
-- _Name Surname: contribution_
-- _Name Surname: contribution_
+-Bakhtiyar Temirlan
+-Yernur Zhassyuzak
+-Dias Temur
 
 **Pages:** Home, Fleet, Rules, About, Contact (navbar on every page).
 
