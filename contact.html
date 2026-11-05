@@ -27,7 +27,14 @@
             <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
             <li class="nav-item"><a class="nav-link active" href="contact.html">Contact</a></li>
           </ul>
-          <a href="contact.html" class="btn btn-dark-ws">My Booking</a>
+          <div class="nav-tools d-flex align-items-center gap-2 mt-3 mt-md-0">
+            <button type="button" class="btn btn-outline-secondary btn-sm" id="themeToggle" aria-label="Switch to dark theme">&#9790;</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" id="favBtn"
+                    data-bs-toggle="offcanvas" data-bs-target="#favPanel" aria-controls="favPanel" aria-label="Open favorites">
+              &#9829; <span id="favCount" class="badge text-bg-dark">0</span>
+            </button>
+            <a href="contact.html" class="btn btn-dark-ws">My Booking</a>
+          </div>
         </div>
       </div>
     </nav>
@@ -35,59 +42,109 @@
 
   <main>
     <section class="container pt-5">
-      <div class="row g-5">
+      <div class="row g-4 g-lg-5">
 
         <div class="col-12 col-lg-7">
           <h1>Book Your Rental</h1>
           <p class="text-secondary">Complete the details below to request a reservation hold.</p>
 
-          <form action="#" method="post">
+          <div id="bookingSuccess" class="alert alert-success d-none" role="status">
+            <strong>Reservation received.</strong> <span class="success-text"></span>
+          </div>
+          <div id="formSummary" class="alert alert-danger d-none" role="alert"></div>
+
+          <form action="#" method="post" id="bookingForm" novalidate>
             <div class="row g-3">
 
-            <div class="col-12 col-md-6">
-              <label class="form-label fw-semibold" for="name">Full Name</label>
-              <input type="text" class="form-control" id="name" name="name" placeholder="e.g. Jane Doe">
-            </div>
-
-            <div class="col-12 col-md-6">
-              <label class="form-label fw-semibold" for="email">Email Address</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="jane@example.com">
-            </div>
-
-            <div class="col-12 col-md-6">
-              <label class="form-label fw-semibold" for="phone">Phone Number</label>
-              <input type="tel" class="form-control" id="phone" name="phone" placeholder="+1 (555) 000-0000">
-            </div>
-
               <div class="col-12 col-md-6">
-                <label class="form-label fw-semibold" for="car">Car Preference</label>
-                <select class="form-select" id="car">
-                <option>Select category (SUV, Sedan...)</option>
-                <option>SUV</option>
-                <option>Sedan</option>
-                <option>Compact</option>
-                <option>Luxury</option>
-                </select>
+                <label class="form-label fw-semibold" for="name">Full Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="e.g. Jane Doe" autocomplete="name">
+                <div class="invalid-feedback"></div>
               </div>
 
-            <div class="col-12 col-md-6">
-              <label class="form-label fw-semibold" for="pu">Pick-up Date</label>
-              <input type="date" class="form-control" id="pu" name="pu">
-            </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-semibold" for="email">Email Address</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="jane@example.com" autocomplete="email">
+                <div class="invalid-feedback"></div>
+              </div>
 
-            <div class="col-12 col-md-6">
-              <label class="form-label fw-semibold" for="do">Drop-off Date</label>
-              <input type="date" class="form-control" id="do" name="do">
-            </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-semibold" for="phone">Phone Number</label>
+                <input type="tel" class="form-control" id="phone" name="phone" placeholder="+7 700 000 00 00" autocomplete="tel">
+                <div class="invalid-feedback"></div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-semibold" for="age">Driver Age</label>
+                <input type="number" class="form-control" id="age" name="age" placeholder="21 or older" min="21" max="80">
+                <div class="invalid-feedback"></div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-semibold" for="category">Car Category</label>
+                <select class="form-select" id="category" name="category">
+                  <option value="">Select category (SUV, Sedan...)</option>
+                  <option value="SUV">SUV</option>
+                  <option value="Sedan">Sedan</option>
+                  <option value="Compact">Compact</option>
+                  <option value="Luxury">Luxury</option>
+                </select>
+                <div class="invalid-feedback"></div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-semibold" for="vehicle">Vehicle</label>
+                <select class="form-select" id="vehicle" name="vehicle">
+                  <option value="">Select a vehicle</option>
+                </select>
+                <div class="invalid-feedback"></div>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label fw-semibold" for="insurance">Insurance</label>
+                <select class="form-select" id="insurance" name="insurance">
+                  <option value="">Select insurance tier</option>
+                </select>
+                <div class="invalid-feedback"></div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-semibold" for="pu">Pick-up Date</label>
+                <input type="date" class="form-control" id="pu" name="pu">
+                <div class="invalid-feedback"></div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-semibold" for="do">Drop-off Date</label>
+                <input type="date" class="form-control" id="do" name="do">
+                <div class="invalid-feedback"></div>
+              </div>
+
+              <div class="col-12">
+                <div id="estimate" class="info-card d-none mb-0" role="status">
+                  <h3>Estimated total</h3>
+                  <p class="mb-0"><span class="estimate-text"></span> = <strong class="estimate-total"></strong></p>
+                </div>
+              </div>
 
               <div class="col-12">
                 <label class="form-label fw-semibold" for="notes">Special Requests / Notes</label>
-                <textarea class="form-control" id="notes" rows="4"
+                <textarea class="form-control" id="notes" name="notes" rows="4" maxlength="300"
                           placeholder="Flight number, destination notes or additional driver requests..."></textarea>
+                <small class="char-count text-secondary">300 characters left</small>
               </div>
 
               <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="terms" name="terms">
+                  <label class="form-check-label" for="terms">I have read the <a href="rules.html" class="text-decoration-underline">rental rules</a>.</label>
+                  <div class="invalid-feedback"></div>
+                </div>
+              </div>
+
+              <div class="col-12 d-flex gap-2">
                 <button type="submit" class="btn btn-dark-ws">Submit Reservation</button>
+                <button type="reset" class="btn btn-outline-secondary">Clear</button>
               </div>
             </div>
           </form>
@@ -174,6 +231,23 @@
     </div>
   </footer>
 
+  <aside class="offcanvas offcanvas-end" tabindex="-1" id="favPanel" aria-labelledby="favTitle">
+    <div class="offcanvas-header">
+      <h2 class="h5 offcanvas-title" id="favTitle">Your Favorites</h2>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <p id="favEmpty" class="text-secondary">No favorites yet. Tap the heart on a car to save it here.</p>
+      <ul id="favList" class="list-unstyled"></ul>
+      <button type="button" id="favClear" class="btn btn-dark-ws w-100 d-none">Clear all</button>
+    </div>
+  </aside>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/booking.js"></script>
 </body>
 </html>
